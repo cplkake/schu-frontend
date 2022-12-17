@@ -1,0 +1,3 @@
+{
+  "rewrites": [{ "source": "/api/:match*", "destination": "https://schu-backend-production.up.railway.app/api/:match*" }]
+}
