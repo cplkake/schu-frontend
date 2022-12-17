@@ -1,0 +1,51 @@
+.overlayCartItem {
+  /* border: solid gold 1px; */
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  align-items: center;
+  gap: 30px;
+  padding: 15px 0;
+  border-bottom: solid 1px #eaeaea;
+}
+
+.overlayCartItem img {
+  width: 100%;
+}
+
+.overlayCartItemPic {
+  display: flex;
+  align-items: center;
+}
+
+.overlayCartItemDescription {
+  /* border: solid green 1px; */
+}
+
+.overlayItemNameLink {
+  text-decoration: none;
+  color: #000000;
+}
+
+.overlayCartItemDescription p {
+  font-size: 14px;
+  margin: 3px;
+}
+
+.overlayCartItemNameQuantPrice,
+.overlayCartItemSizeRemove {
+  /* border: solid 1px pink; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.overlayCartItemColour {
+  /* border: solid 1px red; */
+}
+
+.overlayCartItemSizeRemove button,
+.cartItemCard button {
+  border: none;
+  background-color: transparent;
+  text-decoration: underline;
+  cursor: pointer;
+}

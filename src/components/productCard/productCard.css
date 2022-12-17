@@ -1,0 +1,114 @@
+/* 
+  to do: 
+    - make the brand clickable
+      - https://css-tricks.com/nested-links/ 
+*/
+
+* {
+  font-family: 'Lato', 'Lucida Sans', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  --_spacer: 1rem;
+}
+
+.productCard {
+  /* border: solid 1px purple; */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+
+.productLink {
+  text-decoration: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  /* background-color: black; */
+}
+
+.productImageContainer {
+  /* border: solid greenyellow 1px; */
+  position: relative;
+  top: 0;
+}
+
+.product-main-image {
+  display: block;
+  width: 100%;
+  /* height: auto; */
+}
+
+.product-alt-image {
+  display: none;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  /* transition: .8s ease; */
+  display: inline;
+  opacity: 0;
+  animation: 0.2s linear oldView
+}
+
+@keyframes oldView {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.productCard:hover .product-alt-image {
+  cursor: pointer;
+  opacity: 1;
+  animation: 0.25s linear newView
+}
+
+@keyframes newView {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.productDetails {
+  padding: 5px;
+}
+
+.productDetails a,
+.productName,
+.productPrice {
+  text-decoration: none;
+}
+
+.productDetails a {
+  color: #222323;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5em;
+}
+
+.productName,
+.productPrice {
+  color: #2c2d2d;
+  line-height: 1.5em;
+}
+
+.productName {
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.productPrice {
+  font-size: 12px;
+  margin-top: 1em;
+}

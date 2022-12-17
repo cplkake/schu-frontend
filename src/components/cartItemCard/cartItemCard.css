@@ -1,0 +1,59 @@
+/* styling for CartItemCard */
+.cartItemInfo {
+  display: flex;
+}
+
+.cartItemPic {
+  height: 300px;
+  display: flex;
+  align-items: center;
+}
+
+.cartItemPic img{
+  max-height: 100%;
+  max-width: 220px;
+}
+
+.cartItemDetails{
+  /* border: solid 1px purple; */
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 130px;
+  padding-left: 25px;
+}
+
+.cartItemColourSize p {
+  margin: 4px 0;
+}
+
+.cartItemQuantity {
+  font-size: 12px;
+}
+
+.cartItemQuantity button {
+  margin-top: 8px;
+}
+
+
+.selectQuantity {
+  display: block;
+  background-color: #ffffff;
+  border: solid 1px #eaeaea;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.cartItemPriceBreakdown {
+  width: auto;
+  float: left;
+}
+
+.cartItemPriceBreakdown p {
+  margin: 2px 0;
+}
+
+.quantityXprice {
+  font-size: 11px;
+}

@@ -1,0 +1,23 @@
+.productSizeOption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  border: solid 1px #bebebe;
+  background-color: #f3f3f3;
+  font-size: 13px;
+  color: #c5c5c5;
+}
+
+.inStock {
+  border: solid 1px #000;
+  cursor: pointer;
+  color: #000;
+}
+
+.inStock:hover,
+.selected {
+  color: #fff;
+  background-color: #000;
+}

@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+
+
+* {
+  font-family: 'Lato', 'Lucida Sans', sans-serif;
+  box-sizing: border-box;
+}
+
+/* styling for RecommendedProducts */
+.recommendedProductsSection {
+  /* border: solid 1px goldenrod; */
+  margin-top: 150px;
+  width: 99vw;
+  display: flex;
+  justify-content: center;
+}
+
+.recommendedProducts.outerContainer {
+  /* border: solid 1px purple; */
+  width: 85vw;
+}
+
+.recommendedProducts.innerContainer{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.recommendedProducts img {
+  width: 100%;
+}
