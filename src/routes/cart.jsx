@@ -18,6 +18,7 @@ export default function Cart() {
         <div className="cartItemsContainer">
           {cart.map(cartItem => (
             <CartItemCard
+              key={`${cartItem.shoeId}${cartItem.size}${cartItem.quantity}`}
               brandId={cartItem.brandId}
               brandName={cartItem.brandName}
               shoeId={cartItem.shoeId}

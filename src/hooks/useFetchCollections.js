@@ -7,13 +7,12 @@ export function useFetchCollections({ apiRoute, filtersSelections, setInventory 
     let ignore = false;
 
     // convert filters in filtersSelections into a query string
-    for (const [key, valueArray] of Object.entries(filtersSelections)) {
-      if (valueArray.length) {
-        query = query.concat(valueArray.reduce((string, value) => string.concat(`${key}=${value}&`), ''));
+    for (const [key, value] of Object.entries(filtersSelections)) {
+      if (Array.isArray(value)) {
+        if (value.length) query = query.concat(value.reduce((string, value) => string.concat(`${key}=${value}&`), ''));
       }
+      else query = query.concat(`${key}=${value}&`);
     }
-
-    console.log(`apiRoute is: ${apiRoute}`)
    
     // todo: add error handling
     axios

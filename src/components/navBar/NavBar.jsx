@@ -6,25 +6,14 @@ import './navBar.css';
 
 export default function NavBar({cart, setCart, cartOverlay, toggleCartOverlay}) {
   
-  // state recording if the app is currently scrolled to the top of the page or if it is not (dbl check)
+  // state tracking if the app is currently scrolled to the top of the page
   const [navBarPosition, setNavBarPosition] = useState('topPage');
-  const { width } = useWindowDimensions();
   const [menuOverlay, setMenuOverlay] = useState(false);
   
+  const { width } = useWindowDimensions();
   const location = useLocation()
   const numCartItems = cart.reduce((totalItems, currentItem) => totalItems + currentItem.quantity, 0)
   const subTotal = cart.reduce((prevTotal, cartItem) => prevTotal + cartItem.price * cartItem.quantity, 0);
-
-  const toggleMenuOverlay = () => {
-    menuOverlay ? setMenuOverlay(false) : setMenuOverlay(true);
-  }
-  
-  const removeItem = (id, size) => {
-    setCart(prevCartState => (
-      prevCartState.filter(cartItem => cartItem.id !== id || cartItem.size !== size)
-    ))
-  }
-  
   const navLinkStyle = {
     textDecoration: "none",
     color: location.pathname === '/' ? 'inherit' : 'black',
@@ -32,7 +21,6 @@ export default function NavBar({cart, setCart, cartOverlay, toggleCartOverlay}) 
     fontWeight: '400',
     paddingRight: "20px",
   }
-  
   const navLogoLinkStyle = {
     textDecoration: "none",
     color: location.pathname === '/' ? 'inherit' : 'black',
@@ -41,16 +29,17 @@ export default function NavBar({cart, setCart, cartOverlay, toggleCartOverlay}) 
     paddingRight: width > 1023 ? "40px" : "0px",
     zIndex: 100,
   }
-  
-  useEffect(() => {
-    const onScroll = () => {
-      if (!cartOverlay) setNavBarPosition(window.pageYOffset === 0 ? '' : 'notTopPage');
-    }
-    window.removeEventListener('scroll', onScroll);
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [cartOverlay]);
 
+  const toggleMenuOverlay = () => {
+    menuOverlay ? setMenuOverlay(false) : setMenuOverlay(true);
+  }
+  
+  const removeItem = (shoeId, size) => {
+    setCart(prevCartState => (
+      prevCartState.filter(cartItem => cartItem.shoeId !== shoeId || cartItem.size !== size)
+    ))
+  }
+    
   const renderOverlayMenu = () => {
     return (
       <div className='cartItemsSummaryContainer'>
@@ -71,6 +60,7 @@ export default function NavBar({cart, setCart, cartOverlay, toggleCartOverlay}) 
           <div className="cartItems">
             {cart.map(cartItem => (
               <OverlayCartItem
+                key={`${cartItem.shoeId}${cartItem.size}${cartItem.quantity}`}
                 brandName={cartItem.brandName}
                 brandId={cartItem.brandId}
                 shoeName={cartItem.shoeName}
@@ -80,7 +70,7 @@ export default function NavBar({cart, setCart, cartOverlay, toggleCartOverlay}) 
                 size={cartItem.size}
                 quantity={cartItem.quantity}
                 profilePic={cartItem.profilePic}
-                removeItem={() => removeItem(cartItem.id, cartItem.size)}
+                removeItem={() => removeItem(cartItem.shoeId, cartItem.size)}
               />
             ))}
           </div>
@@ -105,7 +95,7 @@ export default function NavBar({cart, setCart, cartOverlay, toggleCartOverlay}) 
       )
     }
   }
-
+  
   const WideNavBar = () => {
     return (
       <nav className={`navBar ${navBarPosition}`}>
@@ -124,7 +114,7 @@ export default function NavBar({cart, setCart, cartOverlay, toggleCartOverlay}) 
     </nav>  
     )
   }
-
+  
   const MobileNavBar = () => {
     return (
       <nav className={`navBar ${navBarPosition}`}>
@@ -150,6 +140,16 @@ export default function NavBar({cart, setCart, cartOverlay, toggleCartOverlay}) 
       </nav>
     )
   }
+  
+  useEffect(() => {
+    const onScroll = () => {
+      if (!cartOverlay) setNavBarPosition(window.pageYOffset === 0 ? '' : 'notTopPage');
+    }
+    window.removeEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [cartOverlay]);
+
 
   return (
     width > 1023 ? <WideNavBar /> : <MobileNavBar />

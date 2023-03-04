@@ -11,8 +11,6 @@ export default function Shoe() {
   const setCart = context[3];
   const productId = currentPath.match(/[^/]+(?=a$|$)/)[0];
 
-  console.log(currentPath.match(/[^/]+(?=a$|$)/));
-
   return (
     <main>
       {shoeDataArray[0] && <ShoeInformation 

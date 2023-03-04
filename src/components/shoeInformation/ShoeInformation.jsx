@@ -15,9 +15,7 @@ export default function ShoeInformation({ productId, productData, setCart }) {
   
   // will not select sizes that are out of stock
   const handleClick = (sizeOption) => {
-    console.log(sizeOption)
-    if (findStockLeft(sizeOption) > 0) setSize(sizeOption);
-    
+    if (findStockLeft(sizeOption) > 0) setSize(sizeOption);    
   }
 
   const addToCart = () => {
@@ -36,7 +34,7 @@ export default function ShoeInformation({ productId, productData, setCart }) {
 
     setCart(prevCartState => {
       const newState = [...prevCartState];
-      let cartItemMatch = newState.find(cartItem => cartItem.id === newCartItem.id && cartItem.size === newCartItem.size);
+      let cartItemMatch = newState.find(cartItem => cartItem.shoeId === newCartItem.shoeId && cartItem.size === newCartItem.size);
       if (cartItemMatch) {
         cartItemMatch.quantity += 1;
         return newState;
@@ -69,7 +67,7 @@ export default function ShoeInformation({ productId, productData, setCart }) {
                 <ShoeSizeOption 
                   key={sizeObj.size}
                   size={sizeObj.size}
-                  inStock={sizeObj.stock != 0}
+                  inStock={sizeObj.stock !== 0}
                   handleClick={handleClick}
                   selected={sizeObj.size === size}
                 />

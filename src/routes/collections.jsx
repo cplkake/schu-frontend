@@ -6,30 +6,42 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import '../index.css';
 
 export default function Collections() {
-  const defaultFiltersSelection = { brand: [], shoe_types: [] };
   const { width } = useWindowDimensions();
-  const toHideFiltersContainer = width < 768 ? true : false;
-
-  const [filtersSelections, setFiltersSelections] = useState(defaultFiltersSelection);
-  const [inventory, setInventory] = useState([]);
-  const [hideFiltersContainerDisplay, setHideFiltersContainerDisplay] = useState(toHideFiltersContainer);
-  const brandFilterQuery = updateFilterQuery('brand');
-  const typeFilterQuery = updateFilterQuery('shoe_types');
-  let apiRoute = '';
+  const isFiltersContainerHidden = width < 768 ? true : false;
   const currentPath = useLocation().pathname;
+  let apiRoute = '/api/collections';
+  
+  const [filtersSelections, setFiltersSelections] = useState(createDefaultFilters());
+  const [inventory, setInventory] = useState([]);
+  const [hideFiltersContainerDisplay, setHideFiltersContainerDisplay] = useState(isFiltersContainerHidden);
+  
+  
+  function createDefaultFilters() {
+    if (currentPath === '/collections') return { brand: [], shoe_types: [],};
+    else if (currentPath === '/collections/new-arrivals') return { brand: [], shoe_types: [], new_arrivals: true, };
+    else if (currentPath.match(/[0-9a-fA-F]{24}$/)) return { brand: [currentPath.match(/[0-9a-fA-F]{24}$/)], shoe_types: [], };
+  }
 
-  if (currentPath === '/collections') apiRoute='/api/collections/all';
-  else if (currentPath === '/collections/new-arrivals') apiRoute='/api/new-arrivals';
-  else apiRoute=`/api/collections/${currentPath.match(/[^/]+(?=a$|$)/)[0]}`;
-
-  console.log(currentPath)
-  console.log(`apiRoute is ${apiRoute}`)
-
-  function updateFilterQuery(filter) {
+  function createBrandFilterQuery() {
+    // if currentPath a collections page of a specific brand as specified by a matching ObjectId string
+    if (currentPath.match(/[0-9a-fA-F]{24}$/)) {
+      // return a query string for just that brand
+      const brandId = currentPath.match(/[0-9a-fA-F]{24}$/)[0];
+      return `?brand=${brandId}&`
+    }
+    else return retrieveFilterQuery('brand');
+  }
+  
+  function retrieveFilterQuery(filter) {
     let query = '?'
-    for (const [key, valueArray] of Object.entries(filtersSelections)) {
-      if (key !== filter)
-        if (valueArray.length) query = query.concat(valueArray.reduce((string, value) => string.concat(`${key}=${value}&`), ''));
+    for (const [key, value] of Object.entries(filtersSelections)) {
+      if (key !== filter) {
+        // only case not to add a currently-existing variable in filtersSelection is if it is an empty variable, otherwise add it to query
+        if (Array.isArray(value)) {
+          if (value.length) query = query.concat(value.reduce((string, value) => string.concat(`${key}=${value}&`), ''));
+        }
+        else query = query.concat(`${key}=${value}&`);
+      }
     }
     return query;
   }
@@ -73,20 +85,19 @@ export default function Collections() {
           <FilterCheckOptionBlock
             filterName={'brand'}
             apiRoute={apiRoute}
-            query={brandFilterQuery}
+            query={createBrandFilterQuery()}
             toggleSelection={handleBrandFilterSelection}
-            filterSelections={filtersSelections.brand}
+            filterSelections={currentPath.match(/[0-9a-fA-F]{24}$/) ? [] : filtersSelections.brand} // so that if the current collections page is for a specific brand, there will not be a way to clear the brand filters
             handleClearFilter={() => handleClearFilterSelections('brand')}
           />
           <FilterCheckOptionBlock
             filterName={'shoe_types'}
             apiRoute={apiRoute}
-            query={typeFilterQuery}
+            query={retrieveFilterQuery('shoe_types')}
             toggleSelection={handleFootwearTypeFilterSelection}
             filterSelections={filtersSelections.shoe_types}
             handleClearFilter={() => handleClearFilterSelections('shoe_types')}
           />
-
         </div>
         <div className="productsContainer">
           {inventory.length > 0 && (

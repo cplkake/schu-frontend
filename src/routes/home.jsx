@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import useFetch from '../hooks/useFetch';
 import { BrandCard, EmailSubscription, ProductCard } from '../components/index';
-import 'atropos/css';
 import '../index.css';
 
 export default function Home() {
-  const { data: inventory } = useFetch('/api/latest-new-arrivals');
+  // fetch the 5 latest shoes to be added to the collection
+  const numLatestShoes = 5;
+  const { data: inventory } = useFetch(`/api/collections?new_arrivals=true&limit=${numLatestShoes}`);
 
   // fetch some brands to be displayed
   const numDisplayedBrands = 3;

@@ -8,6 +8,7 @@ function getWindowDimensions() {
   };
 }
 
+// used in NavBar component
 export default function useWindowDimensions() {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 

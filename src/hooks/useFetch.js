@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const useFetch = url => {
+const useFetch = apiRoute => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -9,7 +9,7 @@ const useFetch = url => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(url)
+      .get(apiRoute)
       .then(res => {
         if (Array.isArray(res.data)) setData(res.data);
         else setData([res.data])
@@ -19,7 +19,7 @@ const useFetch = url => {
         setError("Sorry, something went wrong")
         setIsLoading(false)
       });
-  }, [url])
+  }, [apiRoute])
 
   return { data, isLoading, error }
 };

@@ -6,17 +6,17 @@ import './productCard.css';
 export default function ProductCard(props) {  
 
   return (
-      <div className="productCard">
-        <div className="productImageContainer">
-          <img src={`https://schu-images.s3.us-west-004.backblazeb2.com/${props.albumURI}/side-right.jpg`} alt="" className="product-main-image" />
-          <img src={`https://schu-images.s3.us-west-004.backblazeb2.com/${props.albumURI}/three-quart-front-right.jpg`} alt="" className="product-alt-image" />
-        </div>
-        <div className="productDetails">
-          <p className="brandLink">{props.brand}</p>
-          <p className="productName">{props.model}</p>
-          <p className="productPrice">{`CA$${props.price}.00`}</p>
-        </div>
-        <Link to={`/collections/${props.brandId}/${props.modelId}`} className="productLink"></Link>
+    <div className="productCard">
+      <div className="productImageContainer">
+        <img src={`https://schu-images.s3.us-west-004.backblazeb2.com/${props.albumURI}/side-right.jpg`} alt="" className="product-main-image" />
+        <img src={`https://schu-images.s3.us-west-004.backblazeb2.com/${props.albumURI}/three-quart-front-right.jpg`} alt="" className="product-alt-image" />
       </div>
+      <div className="productDetails">
+        <p className="brandLink">{props.brand}</p>
+        <p className="productName">{props.model}</p>
+        <p className="productPrice">{`CA$${props.price}.00`}</p>
+      </div>
+      <Link to={`/collections/${props.brandId}/${props.modelId}`} className="productLink"></Link>
+    </div>
   )
 }
